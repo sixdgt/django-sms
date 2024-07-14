@@ -12,6 +12,7 @@ https://docs.djangoproject.com/en/5.0/ref/settings/
 
 from pathlib import Path
 import os
+NPM_BIN_PATH = "C:\\Program Files\\nodejs\\npm.cmd" # if nodejs path not found error occur then add
 
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve().parent.parent
@@ -26,7 +27,9 @@ SECRET_KEY = 'django-insecure-giu$2i7^#^ycygu$!l&mzg2kff1xrv+an7=6d4f1+shy8^9c8j
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = []
+ALLOWED_HOSTS = ['localhost', '127.0.0.1']
+
+SECURE_SSL_REDIRECT = False
 
 
 # Application definition
@@ -38,8 +41,12 @@ INSTALLED_APPS = [
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
-    'accounts'
+    'accounts',
+    'tailwind',
+    'theme',
 ]
+
+TAILWIND_APP_NAME = 'theme'
 
 MIDDLEWARE = [
     'django.middleware.security.SecurityMiddleware',
@@ -66,11 +73,6 @@ TEMPLATES = [
                 'django.contrib.messages.context_processors.messages',
                 'accounts.context_processors.site_info',
             ],
-            'loaders': [
-                # 'django.template.loaders.cached.Loader', for production
-                'django.template.loaders.file_system.Loader',
-                'django.template.loaders.app_directories.Loader',
-            ],
             'debug': True,  # Enable template debugging
         },
     },
@@ -84,8 +86,12 @@ WSGI_APPLICATION = 'school_management_system.wsgi.application'
 
 DATABASES = {
     'default': {
-        'ENGINE': 'django.db.backends.sqlite3',
-        'NAME': BASE_DIR / 'db.sqlite3',
+        'ENGINE': 'django.db.backends.mysql',
+        'NAME': 'school_management_system',
+        'HOST': 'localhost',
+        'USER': 'sixdgt',
+        'PASSWORD': '1234',
+        'PORT': '3306',  # default MySQL port
     }
 }
 
@@ -127,7 +133,8 @@ USE_TZ = True
 STATIC_URL = 'static/'
 
 STATICFILES_DIRS = [
-    os.path.join(BASE_DIR, "school_management_system/static"),
+    os.path.join(BASE_DIR, 'theme/static_src'), # for tailwind 
+    os.path.join(BASE_DIR, "static"),
 ]
 
 STATIC_ROOT = os.path.join(BASE_DIR, "staticfiles")
