@@ -12,7 +12,9 @@ https://docs.djangoproject.com/en/5.0/ref/settings/
 
 from pathlib import Path
 import os
-NPM_BIN_PATH = "C:\\Program Files\\nodejs\\npm.cmd" # if nodejs path not found error occur then add
+
+# npm path
+NPM_BIN_PATH = "C:\\Program Files\\nodejs\\npm.cmd"
 
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve().parent.parent
@@ -29,6 +31,10 @@ DEBUG = True
 
 ALLOWED_HOSTS = ['localhost', '127.0.0.1']
 
+INTERNAL_IPS = [
+    "127.0.0.1",
+]
+
 SECURE_SSL_REDIRECT = False
 
 
@@ -44,6 +50,7 @@ INSTALLED_APPS = [
     'accounts',
     'tailwind',
     'theme',
+    'django_browser_reload',
 ]
 
 TAILWIND_APP_NAME = 'theme'
@@ -56,6 +63,7 @@ MIDDLEWARE = [
     'django.contrib.auth.middleware.AuthenticationMiddleware',
     'django.contrib.messages.middleware.MessageMiddleware',
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
+    "django_browser_reload.middleware.BrowserReloadMiddleware",
 ]
 
 ROOT_URLCONF = 'school_management_system.urls'
@@ -133,7 +141,6 @@ USE_TZ = True
 STATIC_URL = 'static/'
 
 STATICFILES_DIRS = [
-    os.path.join(BASE_DIR, 'theme/static_src'), # for tailwind 
     os.path.join(BASE_DIR, "static"),
 ]
 
